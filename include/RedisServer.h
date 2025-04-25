@@ -5,14 +5,14 @@
 #include <string>
 
 class RedisServer {
-public:
-  RedisServer(int port);
-  void run();
-  void shutdown();
+   public:
+    RedisServer(int port);
+    void run();
+    void shutdown();
 
-private:
-  int port;
-  int server_socket;
-  std::atomic<bool> running;
+   private:
+    int port;
+    int server_socket;
+    std::atomic<bool> running;
 };
-#endif // !REDIS_SERVER_H
+#endif  // !REDIS_SERVER_H
