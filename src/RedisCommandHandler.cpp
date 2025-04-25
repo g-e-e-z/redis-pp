@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <cstddef>
+#include <iostream>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -43,7 +44,7 @@ std::vector<std::string> parserRespCommand(const std::string &input) {
         if (pos >= input.size() || input[pos] != '$') break; // format error
         pos++; // skip '$'
 
-        crlf = input.find("\r\n");
+        crlf = input.find("\r\n", pos);
         if (crlf == std::string::npos) break;
         int len = std::stoi(input.substr(pos, crlf - pos));
         pos = crlf + 2;
@@ -62,10 +63,13 @@ std::string RedisCommandHandler::processCommand(const std::string& commandLine) 
     // Use RESP parser
     std::vector<std::string> tokens = parserRespCommand(commandLine);
     if (tokens.empty()) return "-Error: Empty command\r\n";
+    for (auto& t : tokens) {
+        std::cout << t << "\n";
+    }
 
     std::string cmd = tokens[0];
     std::transform(cmd.begin(), cmd.end(), cmd.begin(), ::toupper);
-    std:std::ostringstream response;
+    std::ostringstream response;
 
     // Connect to database
 
