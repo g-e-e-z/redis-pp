@@ -1,4 +1,5 @@
 #include "../include/RedisCommandHandler.h"
+#include "../include/RedisDatabase.h"
 
 #include <algorithm>
 #include <cstddef>
@@ -63,17 +64,26 @@ std::string RedisCommandHandler::processCommand(const std::string& commandLine) 
     // Use RESP parser
     std::vector<std::string> tokens = parserRespCommand(commandLine);
     if (tokens.empty()) return "-Error: Empty command\r\n";
-    for (auto& t : tokens) {
-        std::cout << t << "\n";
-    }
+
+    // for (auto& t : tokens) {
+    //     std::cout << t << "\n";
+    // }
 
     std::string cmd = tokens[0];
     std::transform(cmd.begin(), cmd.end(), cmd.begin(), ::toupper);
     std::ostringstream response;
 
     // Connect to database
+    RedisDatabase& db = RedisDatabase::getInstance();
 
     // Check commands
+    if (cmd == "PING") {
+        response << "+PONG\r\n";
+    } else if (cmd == "ECHO") {
+        // ....
+    } else {
+        response << "-Error: Unknown command\r\n";
+    }
 
     return response.str();
 }
