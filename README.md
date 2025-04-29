@@ -1,1 +1,2 @@
-# Sora C++ Redis Clone
+# C++ Redis Clone
+tutorial: https://github.com/Cukowski
