@@ -22,6 +22,7 @@ class RedisDatabase {
     std::string type(const std::string& key);
     bool del(const std::string& key);
     bool expire(const std::string& key, int seconds);
+    void purgeExpired();
     bool rename(const std::string& oldKey, const std::string& newKey);
 
     // List Operations
